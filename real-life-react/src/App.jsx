@@ -50,31 +50,6 @@ function App() {
           <OrderTracker restaurant="Corner Pizza" status="cancelled" etaMinutes={0} driverName="Carlos" />
         </div>
       </section>
-
-      <section className="submission-notes">
-        <h2>Hint answers</h2>
-        <ul>
-          <li><strong>Navbar:</strong> <code>user.role === 'admin'</code> would access <code>role</code> on <code>null</code> in the logged-out case, causing a crash. The <code>user &&</code> check ensures that property is read only after a user exists.</li>
-          <li><strong>Product card:</strong> Free shipping uses the final price, calculated with <code>salePrice ?? price</code>. The headphones therefore use $30 instead of the original $60, so they do not qualify.</li>
-          <li><strong>Weather card:</strong> Freezing uses <code>tempF &lt;= 32</code>. Test case 5 must be freezing because 32 is included in the freezing range; <code>&lt; 32</code> would incorrectly classify it as cold.</li>
-          <li><strong>Order tracker:</strong> The ETA is shown only when <code>status === 'on_the_way'</code>, not based on whether <code>etaMinutes</code> is nonzero.</li>
-        </ul>
-
-        <h2>Technique justification</h2>
-        <div className="table-wrap">
-          <table>
-            <thead>
-              <tr><th>Task</th><th>Requirement</th><th>Technique</th><th>Why it fits best</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>1: Navbar</td><td>#3 Admin link</td><td><code>&amp;&amp;</code></td><td>One optional element should appear: this is simpler than either a ternary with an empty branch or an if statement before the return.</td></tr>
-              <tr><td>2: Product card</td><td>#1 Stock label</td><td><code>if / else if</code></td><td>There are three outcomes separated by numeric boundaries; an if chain works clearly before the return and is easier to read than nested ternaries.</td></tr>
-              <tr><td>3: Weather card</td><td>#1 Clothing advice</td><td><code>if / else if</code></td><td>Four temperature ranges require calculated text and color classes, so a pre-return if chain avoids nested ternaries and keeps each boundary explicit.</td></tr>
-              <tr><td>4: Order tracker</td><td>#1 Status message</td><td><code>if / else if</code></td><td>Five mutually exclusive statuses need one message, making a pre-return status chain clearer than five independent or nested ternaries.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </main>
   )
 }
